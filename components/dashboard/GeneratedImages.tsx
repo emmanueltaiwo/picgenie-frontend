@@ -52,7 +52,7 @@ const GeneratedImages = () => {
   return (
     <div>
       <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
-        You have generated {data.length} {data.length < 1 ? "image" : "images"}
+        You have generated {data.length} {data.length < 2 ? "image" : "images"}
       </p>
 
       <div className="mt-16 flow-root sm:mt-24">
