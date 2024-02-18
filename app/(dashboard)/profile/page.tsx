@@ -12,7 +12,7 @@ const Profile = async () => {
 
   return (
     <main>
-      <div className="relative isolate pt-14 dark:bg-gray-900">
+      <div className="relative isolate pt-14 dark:bg-gray-900 pb-20">
         <div
           className="absolute inset-x-0 top-[150px] -z-10 transform-gpu overflow-hidden blur-3xl"
           aria-hidden="true"
