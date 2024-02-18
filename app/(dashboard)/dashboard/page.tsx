@@ -24,7 +24,7 @@ const Dashboard = () => {
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
             <div className="max-w-3xl">
               <h1 className="text-3xl font-bold tracking-tight sm:text-6xl">
-                Lets generate your image instantly🚀
+                Let&apos;s generate your image instantly🚀
               </h1>
               <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
                 Results may vary. We are continually refining our techniques to

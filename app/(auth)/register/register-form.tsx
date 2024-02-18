@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useFormState } from "react-dom";
@@ -8,12 +9,14 @@ import SubmitButton from "../submit-button";
 import { useRouter } from "next/navigation";
 import { handleSignup } from "@/services/actions/auth";
 import { SUCCESSFUL_SIGNUP_RESPONSE } from "@/constants";
+import { Button } from "@/components/ui/button";
 
 const initialState = {
   message: "",
 };
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const registerUser = async (
@@ -62,12 +65,22 @@ const RegisterForm = () => {
 
       <div className="w-full flex flex-col mt-3 gap-2">
         <Label htmlFor="password">Enter your Password</Label>
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-        />
+        <div className="w-full flex items-center gap-3">
+          <Input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            name="password"
+            placeholder="Password"
+          />
+
+          <Button
+            type="button"
+            size="icon"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
+          </Button>
+        </div>
       </div>
 
       <SubmitButton text="Sign Up" />

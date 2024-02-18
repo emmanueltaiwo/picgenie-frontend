@@ -46,7 +46,7 @@ const PromptForm = () => {
         type="text"
         id="prompt"
         name="prompt"
-        placeholder="an happy programmer"
+        placeholder="a happy programmer"
         className="border-gray-900 dark:border-gray-200 border-2"
       />
 
