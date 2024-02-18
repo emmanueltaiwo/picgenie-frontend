@@ -37,11 +37,9 @@ const getUserProfile = async (): Promise<InvalidResponseError | Profile> => {
 
 const handleAxiosError = (error: any): InvalidResponseError => {
   if (error.response) {
-    // The request was made and the server responded with a status code
     const statusCode = error.response.status;
     let errorMessage: string;
 
-    // Customize error message based on status code
     switch (statusCode) {
       case 401:
         errorMessage = "Authentication failed";
@@ -49,7 +47,6 @@ const handleAxiosError = (error: any): InvalidResponseError => {
       case 404:
         errorMessage = "User not found";
         break;
-      // Add more cases as needed
 
       default:
         errorMessage = "Internal server error";
@@ -58,12 +55,69 @@ const handleAxiosError = (error: any): InvalidResponseError => {
 
     return { message: errorMessage };
   } else if (error.request) {
-    // The request was made but no response was received
     return { message: "No response received from server" };
   } else {
-    // Something happened in setting up the request that triggered an error
     return { message: "Error setting up request" };
   }
 };
 
-export { getUserProfile };
+const getUserGeneratedImages = async () => {
+  try {
+    const user = await getUserProfile();
+
+    if ("message" in user) return;
+
+    const { id } = user;
+    const token = cookies().get("token");
+
+    if (!token) {
+      return { message: "User not logged in" };
+    }
+
+    const response = await axios.get(`${API_BASE_URL}/api/image/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+
+    const data = response.data;
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const updateUserCredits = async (creditsBought: number) => {
+  try {
+    if (!creditsBought) {
+      throw new Error("Credit is not available");
+    }
+
+    const token = cookies().get("token");
+
+    if (!token) {
+      return { message: "User not logged in" };
+    }
+
+    const response = await axios.post(
+      `${API_BASE_URL}/api/update-credit`,
+      {
+        creditsBought: creditsBought,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    );
+
+    const data = response.data;
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export { getUserProfile, getUserGeneratedImages, updateUserCredits };

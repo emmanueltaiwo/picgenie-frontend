@@ -3,15 +3,9 @@
 import PricingCard from "@/components/dashboard/PricingCard";
 import React from "react";
 import { cookies } from "next/headers";
-import { getUserProfile } from "@/services/profile";
 
 const PurchaseCredit = async () => {
   const token = cookies().get("token");
-  const user = await getUserProfile();
-
-  if ("message" in user) {
-    return null;
-  }
 
   return (
     <div className="isolate overflow-hidden ">
@@ -36,7 +30,7 @@ const PurchaseCredit = async () => {
 
       <div className="w-full flow-root pb-24 sm:pb-32">
         <div className="-mt-80 w-full">
-          <PricingCard user={user} token={token?.value ?? ""} />
+          <PricingCard token={token?.value ?? ""} />
         </div>
       </div>
     </div>

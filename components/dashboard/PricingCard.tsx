@@ -5,12 +5,10 @@ import { API_BASE_URL, PRICING, STRIPE_PUBLISHABLE_KEY } from "@/constants";
 import { Button } from "../ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { Profile } from "@/typings";
 
-const PricingCard = ({ token, user }: { token: string; user: Profile }) => {
+const PricingCard = ({ token }: { token: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const makePayment = async (id: string) => {
@@ -27,7 +25,6 @@ const PricingCard = ({ token, user }: { token: string; user: Profile }) => {
         {
           name: plan?.name,
           price: plan?.price,
-          id: user.id,
         },
         {
           headers: {
@@ -38,18 +35,20 @@ const PricingCard = ({ token, user }: { token: string; user: Profile }) => {
       );
 
       const data = response.data;
-
+      localStorage.setItem("credits-bought", data.creditsBought);
+      
       const result = await stripe?.redirectToCheckout({
         sessionId: data.id,
       });
-      setIsLoading(false);
 
       if (result?.error) {
-        console.log(result.error);
+        throw new Error();
       }
+
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+
       throw new Error();
     }
   };

@@ -5,6 +5,9 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/Header";
 import { getUserProfile } from "@/services/profile";
 import { Analytics } from "@vercel/analytics/react";
+import StoreProvider from "./store-provider";
+import Provider from "./providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,19 +46,24 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header
-            fullName={fullName || "Profile"}
-            credits={credits}
-            session={session}
-          />
-          {children}
-        </ThemeProvider>
+        <StoreProvider>
+          <Provider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Header
+                fullName={fullName ?? "Profile"}
+                credits={credits}
+                session={session}
+              />
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </Provider>
+        </StoreProvider>
         <Analytics />
       </body>
     </html>

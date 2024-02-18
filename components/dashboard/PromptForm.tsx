@@ -5,13 +5,16 @@ import { Input } from "@/components/ui/input";
 import SubmitButton from "@/app/(auth)/submit-button";
 import { useFormState } from "react-dom";
 import { generateImage } from "@/services/actions/generate-image";
-import { SUCCESSFUL_IMAGE_GENERATION_RESPONSE } from "@/constants";
+import { useAppDispatch } from "@/lib/hooks";
+import { addImage } from "@/lib/features/image-generated/imageSlice";
 
 const initialState = {
   message: "",
 };
 
 const PromptForm = () => {
+  const dispatch = useAppDispatch();
+
   const generate = async (
     prevState: { message: string },
     formData: FormData
@@ -19,13 +22,12 @@ const PromptForm = () => {
     try {
       const response = await generateImage(prevState, formData);
 
-      if (response.message !== SUCCESSFUL_IMAGE_GENERATION_RESPONSE) {
-        return { message: response.message || "An Error Occurred" };
+      if ("message" in response) {
+        return response;
       }
 
       // Dispatch the image to redux state
-
-      console.log(response);
+      dispatch(addImage(response));
 
       return { message: response.message };
     } catch (error) {
