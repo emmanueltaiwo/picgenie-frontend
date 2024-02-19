@@ -23,6 +23,7 @@ const GeneratedImages = () => {
   const { data, isLoading, isError, error } = useQuery<any>({
     queryKey: ["generated-images"],
     queryFn: async () => await getUserGeneratedImages(),
+    refetchInterval: 60 * 60,
   });
 
   const skeletonCards = Array.from({ length: 6 }, (_, index) => (
@@ -33,7 +34,7 @@ const GeneratedImages = () => {
     return (
       <div className="mt-16 flow-root sm:mt-24">
         <div className="-m-2 rounded-xl bg-gray-900/5 dark:bg-gray-400/5 p-2 py-5 ring-1 ring-inset ring-gray-900/10 dark:ring-gray-500/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-          <div className="w-full grid grid-cols-1 gap-5 md:grid-cols-3">
+          <div className="w-full grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {skeletonCards}
           </div>
         </div>

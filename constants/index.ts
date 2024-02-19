@@ -7,9 +7,7 @@ const SUCCESSFUL_SIGNUP_RESPONSE =
 const SUCCESSFUL_IMAGE_GENERATION_RESPONSE =
   "Yay! Image Generated Successfully";
 
-const STRIPE_PUBLISHABLE_KEY =
-  process.env.STRIPE_PUBLISHABLE_KEY ??
-  "pk_test_51Ok73nLAGvm2x2Z7p3XVdqW0qv1d4A6YueZicOCcXjwscNfBnh3mOSa1ctARfIWswLM7wMfG6kCPUlR6eKJCx7Wr003ssR3rYc";
+const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY;
 
 const API_BASE_URL = "https://picgenie-backend.onrender.com";
 
