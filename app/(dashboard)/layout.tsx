@@ -17,9 +17,9 @@ const verifySession = async (): Promise<boolean> => {
 
 export default async function DashboardLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const session = await verifySession();
 
   if (!session) {

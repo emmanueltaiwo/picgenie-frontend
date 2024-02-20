@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import imageReducer from "./features/image-generated/imageSlice";
+import imageReducer from "./features/image-generated/image-slice";
 
 export const makeStore = () => {
   return configureStore({

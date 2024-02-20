@@ -4,77 +4,69 @@ import axios from "axios";
 import { cookies } from "next/headers";
 import { API_BASE_URL } from "@/constants";
 import { getUserProfile } from "../profile";
+import { InvalidResponseError, NewImageGenerated, Profile } from "@/typings";
 
 export const generateImage = async (
-  prevState: { message: string },
+  prevState: { message: "" },
   formData: FormData
-): Promise<any> => {
+): Promise<NewImageGenerated[] | InvalidResponseError> => {
   try {
-    const prompt = formData.get("prompt");
-    const n = formData.get("number");
-
-    if (!prompt || !n || parseInt(n.toString()) < 1) {
+    const { prompt, number } = getFormDataValues(formData);
+    if (!prompt || !number || number < 1) {
       return { message: "Prompt or Number is invalid" };
     }
 
-    const user = await getUserProfile();
-    const number = parseInt(n.toString()) || 1;
-
-    if ("message" in user) {
-      return null;
+    const user = await getUserProfileDetails();
+    if (isError(user)) {
+      throw new Error();
     }
 
     const userAvailableCredits = user.creditsLeft;
-
     if (number > userAvailableCredits) {
-      return { message: "You dont have enough credits" };
+      return { message: "You don't have enough credits" };
     }
 
-    const token = cookies().get("token");
-
+    const token = getToken();
     if (!token) {
       return { message: "User not logged in" };
     }
 
     const response = await axios.post(
       `${API_BASE_URL}/api/image/generate-image`,
-
-      {
-        prompt,
-        number,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
-      }
+      { prompt, number },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    const data = response.data;
-
+    const data = response.data as NewImageGenerated[];
     return data;
-  } catch (error: any) {
-    if (error.response) {
-      const { status, data } = error.response;
-
-      if (status === 400) {
-        return {
-          message: data.message || "Bad Request. Please check your input.",
-        };
-      } else if (status === 500) {
-        return {
-          message:
-            data.message || "Internal Server Error. Please try again later.",
-        };
-      } else {
-        return {
-          message: data.message || "An Error Occurred. Please try again later.",
-        };
-      }
-    } else {
-      return {
-        message: "Network Error. Please check your internet connection.",
-      };
-    }
+  } catch {
+    return { message: "Network Error. Please check your internet connection." };
   }
+};
+
+const getFormDataValues = (
+  formData: FormData
+): { prompt: string | null; number: number | null } => {
+  const prompt = formData.get("prompt") as string;
+  const number = parseInt(formData.get("number") as string);
+  return {
+    prompt: prompt ? prompt.toString() : null,
+    number: isNaN(number) ? null : number,
+  };
+};
+
+const getUserProfileDetails = async (): Promise<Profile | Error> => {
+  const user = await getUserProfile();
+  if ("message" in user) {
+    throw new Error(user.message);
+  }
+  return user;
+};
+
+const getToken = (): string | null => {
+  return cookies().get("token")?.value ?? null;
+};
+
+const isError = (obj: any): obj is Error => {
+  return obj instanceof Error;
 };

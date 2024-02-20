@@ -18,9 +18,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ImageGenerated } from "@/typings";
 
 const GeneratedImages = () => {
-  const { data, isLoading, isError, error } = useQuery<any>({
+  const { data, isLoading, isError, error } = useQuery<ImageGenerated[]>({
     queryKey: ["generated-images"],
     queryFn: async () => await getUserGeneratedImages(),
     refetchInterval: 60 * 60,
@@ -53,12 +54,13 @@ const GeneratedImages = () => {
   return (
     <div>
       <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
-        You have generated {data.length} {data.length < 2 ? "image" : "images"}
+        You have generated {data?.length}{" "}
+        {data && data.length < 2 ? "image" : "images"}
       </p>
 
       <div className="mt-16 flow-root sm:mt-24">
         <div className="-m-2 rounded-xl bg-gray-900/5 dark:bg-gray-400/5 p-2 py-5 ring-1 ring-inset ring-gray-900/10 dark:ring-gray-500/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-          {data?.length < 1 ? (
+          {data && data.length < 1 ? (
             <div className="flex flex-col gap-5 items-center justify-center">
               <h3 className="text-center">
                 Generate some images and you&apos;ll find them here😊
@@ -72,16 +74,16 @@ const GeneratedImages = () => {
             </div>
           ) : (
             <div
-              className="w-full grid grid-cols-1 gap-5 md:grid-cols-3 
+              className="w-full grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 
             "
             >
               {data
                 ?.sort(
-                  (a: any, b: any) =>
+                  (a: ImageGenerated, b: ImageGenerated) =>
                     new Date(b.created_at).getTime() -
                     new Date(a.created_at).getTime()
                 )
-                .map((image: any) => {
+                .map((image: ImageGenerated) => {
                   const imageUrl = `data:image/png;base64,${image.base64}`;
 
                   const date = formatDate(image.created_at);

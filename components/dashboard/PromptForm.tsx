@@ -6,7 +6,7 @@ import SubmitButton from "@/app/(auth)/submit-button";
 import { useFormState } from "react-dom";
 import { generateImage } from "@/services/actions/generate-image";
 import { useAppDispatch } from "@/lib/hooks";
-import { addImage } from "@/lib/features/image-generated/imageSlice";
+import { addImage } from "@/lib/features/image-generated/image-slice";
 
 const initialState = {
   message: "",
@@ -26,10 +26,9 @@ const PromptForm = () => {
         return response;
       }
 
-      // Dispatch the image to redux state
       dispatch(addImage(response));
 
-      return { message: response.message };
+      return { message: "Image generated successfully" };
     } catch (error) {
       return {
         message: "An unexpected error occurred. Please try again later.",

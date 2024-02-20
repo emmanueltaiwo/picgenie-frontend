@@ -2,12 +2,8 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { Profile } from "@/typings";
+import { ImageGenerated, InvalidResponseError, Profile } from "@/typings";
 import { API_BASE_URL } from "@/constants";
-
-type InvalidResponseError = {
-  message: string;
-};
 
 const getUserProfile = async (): Promise<InvalidResponseError | Profile> => {
   try {
@@ -61,17 +57,17 @@ const handleAxiosError = (error: any): InvalidResponseError => {
   }
 };
 
-const getUserGeneratedImages = async () => {
+const getUserGeneratedImages = async ():Promise<ImageGenerated[]> => {
   try {
     const user = await getUserProfile();
 
-    if ("message" in user) return;
+    if ("message" in user) throw new Error();
 
     const { id } = user;
     const token = cookies().get("token");
 
     if (!token) {
-      return { message: "User not logged in" };
+      throw new Error("Token is  not available");
     }
 
     const response = await axios.get(`${API_BASE_URL}/api/image/${id}`, {
@@ -80,7 +76,8 @@ const getUserGeneratedImages = async () => {
       },
     });
 
-    const data = response.data;
+   
+    const data = response.data as ImageGenerated[];
 
     return data;
   } catch (error: any) {

@@ -13,13 +13,14 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { NewImageGenerated } from "@/typings";
 
 const NewImage = () => {
   const image = useAppSelector((state) => state.image.imageGenerated);
 
   return (
     <div className="w-full">
-      {image.length < 1 ? (
+      {!image || image.length < 1 ? (
         <p className="text-center">Generate Some Images</p>
       ) : (
         <div
@@ -27,7 +28,7 @@ const NewImage = () => {
             image.length > 1 ? "md:grid-cols-2" : "md:grid-cols-1"
           } `}
         >
-          {image.map((i: any) => (
+          {image.map((i: NewImageGenerated) => (
             <div
               key={i.url}
               className="w-fit bg-slate-900 rounded-lg p-5 flex items-center justify-center flex-col gap-3"
