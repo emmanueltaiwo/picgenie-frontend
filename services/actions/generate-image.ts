@@ -7,7 +7,7 @@ import { getUserProfile } from "../profile";
 import { InvalidResponseError, NewImageGenerated, Profile } from "@/typings";
 
 export const generateImage = async (
-  prevState: { message: "" },
+  prevState: { message: string },
   formData: FormData
 ): Promise<NewImageGenerated[] | InvalidResponseError> => {
   try {
