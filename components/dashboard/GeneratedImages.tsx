@@ -21,10 +21,11 @@ import {
 import { ImageGenerated } from "@/typings";
 
 const GeneratedImages = () => {
-  const { data, isLoading, isError, error } = useQuery<ImageGenerated[]>({
+  const { data, isLoading, isError } = useQuery<ImageGenerated[]>({
     queryKey: ["generated-images"],
     queryFn: async () => await getUserGeneratedImages(),
-    refetchInterval: 60 * 60,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   const skeletonCards = Array.from({ length: 6 }, (_, index) => (
@@ -45,9 +46,14 @@ const GeneratedImages = () => {
 
   if (isError) {
     return (
-      <p className="text-red-500 text-center font-medium text-[15px]">
-        Error: {error.message}
-      </p>
+      <div className="mt-16 flow-root sm:mt-24">
+        <div className="-m-2 rounded-xl bg-gray-900/5 dark:bg-gray-400/5 p-2 py-5 ring-1 ring-inset ring-gray-900/10 dark:ring-gray-500/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+          <h3 className="text-center text-red-500 font-medium">
+            An Error Occured! Check Your Internet Connection And Refresh The
+            Page.
+          </h3>
+        </div>
+      </div>
     );
   }
 

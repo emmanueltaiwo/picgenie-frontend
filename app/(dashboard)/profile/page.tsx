@@ -1,10 +1,20 @@
 import React from "react";
-import { getUserProfile } from "@/services/profile";
+import { getUserGeneratedImages, getUserProfile } from "@/services/profile";
 import GeneratedImages from "@/components/dashboard/GeneratedImages";
 import ProfileHeader from "@/components/dashboard/ProfileHeader";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 const Profile = async () => {
   const user = await getUserProfile();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["generated-images"],
+    queryFn: async () => await getUserGeneratedImages(),
+  });
 
   if ("message" in user) {
     return null;
@@ -29,7 +39,9 @@ const Profile = async () => {
         <div className="sm:py-4 lg:pb-40">
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
             <ProfileHeader user={user} />
-            <GeneratedImages />
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <GeneratedImages />
+            </HydrationBoundary>
           </div>
         </div>
       </div>

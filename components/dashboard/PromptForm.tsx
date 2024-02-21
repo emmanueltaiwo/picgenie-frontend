@@ -7,12 +7,14 @@ import { useFormState } from "react-dom";
 import { generateImage } from "@/services/actions/generate-image";
 import { useAppDispatch } from "@/lib/hooks";
 import { addImage } from "@/lib/features/image-generated/image-slice";
+import { useToast } from "@/components/ui/use-toast";
 
 const initialState = {
   message: "",
 };
 
 const PromptForm = () => {
+  const { toast } = useToast();
   const dispatch = useAppDispatch();
 
   const generate = async (
@@ -27,6 +29,10 @@ const PromptForm = () => {
       }
 
       dispatch(addImage(response));
+      toast({
+        title: "Image Has Been Generated Successfully",
+        description: "Refresh Your Profile Page To View Your Image",
+      });
 
       return { message: "Image generated successfully" };
     } catch (error) {
