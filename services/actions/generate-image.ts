@@ -39,7 +39,7 @@ export const generateImage = async (
 
     const data = response.data as NewImageGenerated[];
     return data;
-  } catch {
+  } catch(error) {
     return { message: "Network Error. Please check your internet connection." };
   }
 };

@@ -24,8 +24,6 @@ const GeneratedImages = () => {
   const { data, isLoading, isError } = useQuery<ImageGenerated[]>({
     queryKey: ["generated-images"],
     queryFn: async () => await getUserGeneratedImages(),
-    refetchOnMount: false,
-    refetchOnReconnect: false,
   });
 
   const skeletonCards = Array.from({ length: 6 }, (_, index) => (

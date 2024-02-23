@@ -57,31 +57,30 @@ const handleAxiosError = (error: any): InvalidResponseError => {
   }
 };
 
-const getUserGeneratedImages = async ():Promise<ImageGenerated[]> => {
+const getUserGeneratedImages = async (): Promise<ImageGenerated[]> => {
   try {
-    const user = await getUserProfile();
-
-    if ("message" in user) throw new Error();
-
-    const { id } = user;
     const token = cookies().get("token");
 
     if (!token) {
-      throw new Error("Token is  not available");
+      throw new Error("Token is not available");
     }
 
-    const response = await axios.get(`${API_BASE_URL}/api/image/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/image`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
     });
 
-   
-    const data = response.data as ImageGenerated[];
+    if (!response.ok) {
+      throw new Error("Failed to fetch user generated images");
+    }
+
+    const data = (await response.json()) as ImageGenerated[];
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
