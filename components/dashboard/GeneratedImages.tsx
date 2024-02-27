@@ -125,7 +125,7 @@ const GeneratedImages = () => {
                               </AlertDialogTitle>
                               <Image
                                 src={image.imageUrl}
-                                width={300}
+                                width={450}
                                 height={400}
                                 alt="image"
                                 className="w-fit rounded-lg mx-auto"
