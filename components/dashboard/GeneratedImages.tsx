@@ -88,25 +88,24 @@ const GeneratedImages = () => {
                     new Date(a.created_at).getTime()
                 )
                 .map((image: ImageGenerated) => {
-                  const imageUrl = `data:image/png;base64,${image.base64}`;
-
                   const date = formatDate(image.created_at);
 
                   return (
                     <div
-                      key={imageUrl}
+                      key={image.imageUrl}
                       className="w-fit bg-gray-300 hover:bg-gray-400 dark:bg-slate-900 dark:hover:bg-[rgb(8,19,47)] rounded-lg p-5 flex justify-center flex-col gap-3 transition-all duration-500 cursor-pointer"
                     >
                       <Image
-                        src={imageUrl}
+                        src={image.imageUrl}
                         width={300}
                         height={400}
                         alt="image"
+                        priority={true}
                         className="w-fit rounded-lg mx-auto"
                       />
                       <div className="flex gap-3 md:gap-5 items-cener mx-auto">
                         <Button asChild>
-                          <a href={imageUrl} download>
+                          <a href={image.imageUrl} download>
                             <DownloadIcon className="mr-2 w-4 h-4" />
                             Download
                           </a>
@@ -125,7 +124,7 @@ const GeneratedImages = () => {
                                 {image.prompt}
                               </AlertDialogTitle>
                               <Image
-                                src={imageUrl}
+                                src={image.imageUrl}
                                 width={300}
                                 height={400}
                                 alt="image"

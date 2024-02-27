@@ -1,8 +1,7 @@
-import { NewImageGenerated } from "@/typings";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ImageState {
-  imageGenerated: NewImageGenerated[];
+  imageGenerated: string[];
 }
 
 const initialState: ImageState = {
@@ -13,7 +12,7 @@ export const imageSlice = createSlice({
   name: "image",
   initialState,
   reducers: {
-    addImage: (state, action: PayloadAction<NewImageGenerated[]>) => {
+    addImage: (state, action: PayloadAction<string[]>) => {
       return { ...state, imageGenerated: action.payload };
     },
   },

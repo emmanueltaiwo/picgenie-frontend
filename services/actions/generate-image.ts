@@ -4,12 +4,12 @@ import axios from "axios";
 import { cookies } from "next/headers";
 import { API_BASE_URL } from "@/constants";
 import { getUserProfile } from "../profile";
-import { InvalidResponseError, NewImageGenerated, Profile } from "@/typings";
+import { InvalidResponseError, Profile } from "@/typings";
 
 export const generateImage = async (
   prevState: { message: string },
   formData: FormData
-): Promise<NewImageGenerated[] | InvalidResponseError> => {
+): Promise<string[] | InvalidResponseError> => {
   try {
     const { prompt, number } = getFormDataValues(formData);
     if (!prompt || !number || number < 1) {
@@ -37,9 +37,10 @@ export const generateImage = async (
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    const data = response.data as NewImageGenerated[];
+    const data = response.data as string[];
+
     return data;
-  } catch(error) {
+  } catch (error) {
     return { message: "Network Error. Please check your internet connection." };
   }
 };

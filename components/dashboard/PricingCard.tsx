@@ -7,9 +7,11 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const PricingCard = ({ token }: { token: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setItem } = useLocalStorage("credits-bought");
 
   const makePayment = async (id: string) => {
     try {
@@ -35,8 +37,8 @@ const PricingCard = ({ token }: { token: string }) => {
       );
 
       const data = response.data;
-      localStorage.setItem("credits-bought", data.creditsBought);
-      
+      setItem(data.creditsBought);
+
       const result = await stripe?.redirectToCheckout({
         sessionId: data.id,
       });

@@ -11,12 +11,8 @@ export type Profile = {
   id: string;
 };
 
-export type NewImageGenerated = {
-  url: string;
-};
-
 export type ImageGenerated = {
-  base64: string;
+  imageUrl: string;
   userId: string;
   created_at: number;
   prompt: string;

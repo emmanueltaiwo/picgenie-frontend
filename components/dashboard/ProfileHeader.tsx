@@ -6,10 +6,12 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const ProfileHeader = ({ user }: { user: Profile }) => {
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
+  const { getItem, removeItem } = useLocalStorage("credits-bought");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const ProfileHeader = ({ user }: { user: Profile }) => {
       try {
         if (status !== user.id) return;
 
-        let creditsBoughtString = localStorage.getItem("credits-bought");
+        let creditsBoughtString = getItem();
 
         if (!creditsBoughtString) {
           creditsBoughtString = "0";
@@ -30,7 +32,7 @@ const ProfileHeader = ({ user }: { user: Profile }) => {
         }
 
         const response = await updateUserCredits(creditsBought);
-        localStorage.removeItem("credits-bought");
+        removeItem();
 
         if (response.message !== "Credit Updated Successfully") {
           return toast({
@@ -49,7 +51,7 @@ const ProfileHeader = ({ user }: { user: Profile }) => {
     };
 
     verifyAndUpdateCredit();
-  }, [status, toast, user]);
+  }, [status, toast, user, getItem, removeItem]);
 
   return (
     <div className="max-w-3xl">
