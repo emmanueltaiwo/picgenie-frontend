@@ -1,22 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { useFormState } from "react-dom";
 import SubmitButton from "../submit-button";
 import { useRouter } from "next/navigation";
 import { handleSignup } from "@/services/actions/auth";
 import { SUCCESSFUL_SIGNUP_RESPONSE } from "@/constants";
-import { Button } from "@/components/ui/button";
+import FormInput from "../form-input";
 
 const initialState = {
   message: "",
 };
 
 const RegisterForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const registerUser = async (
@@ -55,32 +51,27 @@ const RegisterForm = () => {
 
       <div className="w-full flex flex-col gap-2 mt-5">
         <Label htmlFor="name">Enter your full name</Label>
-        <Input type="text" id="name" name="fullName" placeholder="Full Name" />
+        <FormInput
+          type="text"
+          id="name"
+          name="fullName"
+          placeholder="Full Name"
+        />
       </div>
 
       <div className="w-full flex flex-col gap-2 mt-3">
         <Label htmlFor="email">Enter your email address</Label>
-        <Input type="email" id="email" name="email" placeholder="Email" />
+        <FormInput type="email" id="email" name="email" placeholder="Email" />
       </div>
 
       <div className="w-full flex flex-col mt-3 gap-2">
         <Label htmlFor="password">Enter your Password</Label>
-        <div className="w-full flex items-center gap-3">
-          <Input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            placeholder="Password"
-          />
-
-          <Button
-            type="button"
-            size="icon"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
-          </Button>
-        </div>
+        <FormInput
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+        />
       </div>
 
       <SubmitButton text="Sign Up" />
