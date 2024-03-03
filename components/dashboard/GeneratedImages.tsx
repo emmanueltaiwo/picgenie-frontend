@@ -1,24 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { DownloadIcon, EyeOpenIcon, ReloadIcon } from "@radix-ui/react-icons";
-import { formatDate } from "@/lib/utils";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getUserGeneratedImages } from "@/services/profile";
 import SkeletonLoader from "./SkeletonLoader";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { ImageGenerated } from "@/typings";
+import ImageCard from "./ImageCard";
 
 const GeneratedImages = () => {
   const { data, isLoading, isError } = useQuery<ImageGenerated[]>({
@@ -87,70 +76,13 @@ const GeneratedImages = () => {
                     new Date(b.created_at).getTime() -
                     new Date(a.created_at).getTime()
                 )
-                .map((image: ImageGenerated) => {
-                  const date = formatDate(image.created_at);
-
-                  return (
-                    <div
-                      key={image.imageUrl}
-                      className="w-fit bg-gray-300 hover:bg-gray-400 dark:bg-slate-900 dark:hover:bg-[rgb(8,19,47)] rounded-lg p-5 flex justify-center flex-col gap-3 transition-all duration-500 cursor-pointer"
-                    >
-                      <Image
-                        src={image.imageUrl}
-                        width={300}
-                        height={400}
-                        alt="image"
-                        priority={true}
-                        className="w-fit rounded-lg mx-auto"
-                      />
-                      <div className="flex gap-3 md:gap-5 items-cener mx-auto">
-                        <Button asChild>
-                          <a href={image.imageUrl} download>
-                            <DownloadIcon className="mr-2 w-4 h-4" />
-                            Download
-                          </a>
-                        </Button>
-
-                        <AlertDialog>
-                          <AlertDialogTrigger>
-                            <Button>
-                              <EyeOpenIcon className="mr-2 w-4 h-4" />
-                              View
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                {image.prompt}
-                              </AlertDialogTitle>
-                              <Image
-                                src={image.imageUrl}
-                                width={450}
-                                height={400}
-                                alt="image"
-                                className="w-fit rounded-lg mx-auto"
-                              />
-                              <AlertDialogDescription>
-                                {date}
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-
-                      <h2 className="my-1 font-[300] text-[13px] text-left">
-                        Prompt: {image.prompt}
-                      </h2>
-
-                      <h2 className="my-1 font-[300] text-[13px] text-left">
-                        Created At: {date}
-                      </h2>
-                    </div>
-                  );
-                })}
+                .map((image: ImageGenerated) => (
+                  <ImageCard
+                    key={image.imageUrl}
+                    data={image}
+                    newImage={false}
+                  />
+                ))}
             </div>
           )}
         </div>
