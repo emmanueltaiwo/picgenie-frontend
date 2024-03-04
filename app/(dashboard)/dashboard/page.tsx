@@ -20,21 +20,24 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="py-12 sm:py-4 lg:pb-40">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <div className="py-5 sm:py-4 lg:pb-40">
+          <div className="mx-auto max-w-6xl px-3 md:px-6 lg:px-8">
             <div className="max-w-3xl">
               <h1 className="text-3xl font-bold tracking-tight sm:text-6xl">
-                Let&apos;s generate your image instantly🚀
+                Let&apos;s <span className="text-[#b925e6]">generate</span> your{" "}
+                <span className="text-[#9341fd]">image</span> instantly🚀
               </h1>
-              <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
+              <p className="mt-6 text-[15px] sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
                 Results may vary. We are continually refining our techniques to
                 tailor outcomes to specific styles. Here are some helpful tips
                 for enhancing your image designs.
               </p>
 
-              <ul className="flex flex-col gap-3 list-disc mt-10 ml-5">
+              <ul className="flex flex-col gap-3 list-disc mt-10 mx-3 md:ml-5">
                 {IMAGE_TIPS.map((tip) => (
-                  <li key={tip.id}>{tip.tip}</li>
+                  <li className="text-[14px] sm:text-[17px]" key={tip.id}>
+                    {tip.tip}
+                  </li>
                 ))}
               </ul>
 

@@ -111,6 +111,14 @@ const ImageCard: FC<Props> = ({ imageUrl, data, newImage }) => {
 
           <Modal date={date} prompt={data.prompt} imageUrl={data.imageUrl} />
         </div>
+
+        <h2 className="my-1 font-[300] text-[13px] text-left">
+          Prompt: {data.prompt}
+        </h2>
+
+        <h2 className="my-1 font-[300] text-[13px] text-left">
+          Created At: {date}
+        </h2>
       </div>
     );
   }

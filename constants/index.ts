@@ -21,10 +21,6 @@ const IMAGE_TIPS = [
     tip: "Concise prompts tend to yield optimal results.",
   },
   {
-    id: 3,
-    tip: "Once you discover an initial icon you favor, explore its variants.",
-  },
-  {
     id: 4,
     tip: "Experiment with incorporating descriptive words like happy or vibrant to enhance your designs.",
   },

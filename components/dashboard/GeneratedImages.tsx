@@ -47,11 +47,12 @@ const GeneratedImages = () => {
   return (
     <div>
       <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
-        You have generated {data?.length}{" "}
+        You have generated{" "}
+        <span className="text-[#b925e6] font-bold">{data?.length}</span>{" "}
         {data && data.length < 2 ? "image" : "images"}
       </p>
 
-      <div className="mt-16 flow-root sm:mt-24">
+      <div className="mt-10 flow-root sm:mt-24">
         <div className="-m-2 rounded-xl bg-gray-900/5 dark:bg-gray-400/5 p-2 py-5 ring-1 ring-inset ring-gray-900/10 dark:ring-gray-500/10 lg:-m-4 lg:rounded-2xl lg:p-4">
           {data && data.length < 1 ? (
             <div className="flex flex-col gap-5 items-center justify-center">

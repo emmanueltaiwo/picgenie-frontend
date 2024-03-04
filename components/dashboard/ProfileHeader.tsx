@@ -105,11 +105,11 @@ const ProfileHeader = ({ user }: { user: Profile }) => {
           />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">
+          <h1 className="text-[22px] font-bold tracking-tight sm:text-4xl">
             Hi, <span className="text-[#9341fd]">{user.fullName}</span>
           </h1>
 
-          <p className="text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
+          <p className="text-[14px] sm:text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
             You have {user.creditsLeft}{" "}
             {user.creditsLeft > 1 ? "credits" : "credit"} left
           </p>
