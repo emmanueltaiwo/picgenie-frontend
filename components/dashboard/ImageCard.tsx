@@ -97,7 +97,7 @@ const ImageCard: FC<Props> = ({ imageUrl, data, newImage }) => {
         key={data.imageUrl}
         className="w-full bg-gray-300 hover:bg-gray-400 dark:bg-slate-900 dark:hover:bg-[rgb(8,19,47)] rounded-lg p-5 flex justify-center flex-col gap-3 transition-all duration-500 cursor-pointer"
       >
-        <div className="w-full md:w-full  min-h-[300px]">
+        <div className="w-full min-h-[300px]">
           <Image
             src={data.imageUrl}
             width={300}
