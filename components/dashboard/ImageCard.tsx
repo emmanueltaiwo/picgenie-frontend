@@ -42,13 +42,16 @@ const Modal: FC<ModalProps> = ({ prompt, imageUrl, date }) => {
         <AlertDialogHeader>
           {prompt && <AlertDialogTitle>{prompt}</AlertDialogTitle>}
 
-          <Image
-            src={imageUrl}
-            width={450}
-            height={400}
-            alt="image"
-            className="w-fit rounded-lg mx-auto"
-          />
+          <div className="w-full md:w-[450px] min-h-[400px]">
+            <Image
+              src={imageUrl}
+              width={450}
+              height={400}
+              alt="image"
+              className="w-fit rounded-lg mx-auto"
+            />
+          </div>
+
           {date && <AlertDialogDescription>{date}</AlertDialogDescription>}
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -63,13 +66,15 @@ const ImageCard: FC<Props> = ({ imageUrl, data, newImage }) => {
   if (newImage) {
     return (
       <div className="w-fit bg-slate-900 rounded-lg p-5 flex items-center justify-center flex-col gap-3">
-        <Image
-          src={imageUrl ?? "/logo.png"}
-          width={400}
-          height={400}
-          alt="image"
-          className="w-fit rounded-lg"
-        />
+        <div className="w-full md:w-[400px] min-h-[400px]">
+          <Image
+            src={imageUrl ?? "/logo.png"}
+            width={400}
+            height={400}
+            alt="image"
+            className="w-fit rounded-lg"
+          />
+        </div>
 
         <div className="flex gap-3 md:gap-5 items-cener">
           <Button asChild>
@@ -90,16 +95,18 @@ const ImageCard: FC<Props> = ({ imageUrl, data, newImage }) => {
     return (
       <div
         key={data.imageUrl}
-        className="w-fit bg-gray-300 hover:bg-gray-400 dark:bg-slate-900 dark:hover:bg-[rgb(8,19,47)] rounded-lg p-5 flex justify-center flex-col gap-3 transition-all duration-500 cursor-pointer"
+        className="w-full bg-gray-300 hover:bg-gray-400 dark:bg-slate-900 dark:hover:bg-[rgb(8,19,47)] rounded-lg p-5 flex justify-center flex-col gap-3 transition-all duration-500 cursor-pointer"
       >
-        <Image
-          src={data.imageUrl}
-          width={300}
-          height={400}
-          alt="image"
-          priority={true}
-          className="w-fit rounded-lg mx-auto"
-        />
+        <div className="w-full md:w-full  min-h-[300px]">
+          <Image
+            src={data.imageUrl}
+            width={300}
+            height={400}
+            alt="image"
+            priority={true}
+            className="w-full rounded-lg mx-auto"
+          />
+        </div>
 
         <div className="flex gap-3 md:gap-5 items-cener mx-auto">
           <Button asChild>

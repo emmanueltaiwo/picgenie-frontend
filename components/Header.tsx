@@ -28,7 +28,7 @@ const Header = ({
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900">
-      <nav className="flex flex-col gap-5 md:gap-0 md:flex-row items-center p-5 pl-2 bg-white dark:bg-gray-900 max-w-7xl mx-auto">
+      <nav className="flex mt-5 flex-col gap-5 md:gap-0 md:flex-row items-center p-5 pl-2 bg-white dark:bg-gray-900 max-w-7xl mx-auto">
         <Logo />
 
         <div className="flex-1 flex items-center justify-end space-x-4">
@@ -87,6 +87,7 @@ const Header = ({
                   variant="outline"
                   onClick={() => {
                     handleSignOut();
+                    router.refresh();
                     router.push("/");
                   }}
                 >
