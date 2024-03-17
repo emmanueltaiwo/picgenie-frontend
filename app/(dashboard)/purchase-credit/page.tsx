@@ -1,6 +1,6 @@
 "use server";
 
-import PricingCard from "@/components/dashboard/PricingCard";
+import PricingCard from "@/components/dashboard/pricing/PricingCard";
 import React from "react";
 import { cookies } from "next/headers";
 

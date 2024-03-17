@@ -1,14 +1,8 @@
+import FolderDetails from "@/components/dashboard/folder/FolderDetails";
 import React from "react";
-import { getUserProfile } from "@/services/profile";
-import GeneratedImages from "@/components/dashboard/profile/GeneratedImages";
-import ProfileHeader from "@/components/dashboard/profile/ProfileHeader";
 
-const Profile = async () => {
-  const user = await getUserProfile();
-
-  if ("message" in user) {
-    return null;
-  }
+const page = async ({ params }: { params: { slug: string[] } }) => {
+  const folderId = params.slug[1];
 
   return (
     <main>
@@ -28,9 +22,7 @@ const Profile = async () => {
 
         <div className="sm:py-4 lg:pb-40">
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <ProfileHeader user={user} />
-
-            <GeneratedImages />
+            <FolderDetails folderId={folderId} />
           </div>
         </div>
       </div>
@@ -38,4 +30,4 @@ const Profile = async () => {
   );
 };
 
-export default Profile;
+export default page;

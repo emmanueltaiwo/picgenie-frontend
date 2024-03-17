@@ -116,4 +116,31 @@ const updateUserCredits = async (creditsBought: number) => {
   }
 };
 
-export { getUserProfile, getUserGeneratedImages, updateUserCredits };
+const deleteImage = async (imageId: string): Promise<string> => {
+  try {
+    const token = cookies().get("token");
+
+    if (!token) {
+      return "User not logged in";
+    }
+
+    const response = await axios.delete(`${API_BASE_URL}/api/image/${imageId}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+
+    const data = response.data as string;
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export {
+  getUserProfile,
+  getUserGeneratedImages,
+  updateUserCredits,
+  deleteImage,
+};
