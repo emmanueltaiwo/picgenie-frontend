@@ -56,7 +56,6 @@ const FolderDetails = ({ folderId }: { folderId: string }) => {
               <h3 className="text-center">This folder is empty</h3>
             ) : (
               data?.images
-                .slice()
                 .sort(
                   (a, b) =>
                     new Date(b.created_at).getTime() -
