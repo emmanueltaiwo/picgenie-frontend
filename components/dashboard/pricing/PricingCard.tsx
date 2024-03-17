@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { API_BASE_URL, PRICING, STRIPE_PUBLISHABLE_KEY } from "@/constants";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { loadStripe } from "@stripe/stripe-js";

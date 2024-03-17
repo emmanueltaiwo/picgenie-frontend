@@ -16,8 +16,23 @@ export type ImageGenerated = {
   userId: string;
   created_at: number;
   prompt: string;
+  id: string;
+  moved: boolean;
 };
 
 export type InvalidResponseError = {
   message: string;
+};
+
+export type FolderResponse = {
+  message: string;
+};
+
+export type Folder = {
+  folderName: string;
+  created_at: number;
+  userId: string;
+  isPublic: boolean;
+  images: ImageGenerated[];
+  id: string;
 };

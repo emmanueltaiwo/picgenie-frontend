@@ -1,13 +1,15 @@
 "use client";
 
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import Link from "next/link";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getUserGeneratedImages } from "@/services/profile";
-import SkeletonLoader from "./SkeletonLoader";
+import SkeletonLoader from "../SkeletonLoader";
 import { ImageGenerated } from "@/typings";
-import ImageCard from "./ImageCard";
+import ImageCard from "../ImageCard";
+import CreateFolder from "../folder/CreateFolder";
+import Folders from "../folder/Folders";
 
 const GeneratedImages = () => {
   const { data, isLoading, isError } = useQuery<ImageGenerated[]>({
@@ -67,23 +69,25 @@ const GeneratedImages = () => {
               </Button>
             </div>
           ) : (
-            <div
-              className="w-full grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 
-            "
-            >
-              {data
-                ?.sort(
-                  (a: ImageGenerated, b: ImageGenerated) =>
-                    new Date(b.created_at).getTime() -
-                    new Date(a.created_at).getTime()
-                )
-                .map((image: ImageGenerated) => (
-                  <ImageCard
-                    key={image.imageUrl}
-                    data={image}
-                    newImage={false}
-                  />
-                ))}
+            <div>
+              <CreateFolder />
+              <Folders />
+              <div className="mt-5 w-full grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {data
+                  ?.sort(
+                    (a: ImageGenerated, b: ImageGenerated) =>
+                      new Date(b.created_at).getTime() -
+                      new Date(a.created_at).getTime()
+                  )
+                  .filter((image) => image.moved === false)
+                  .map((image: ImageGenerated) => (
+                    <ImageCard
+                      key={image.imageUrl}
+                      data={image}
+                      newImage={false}
+                    />
+                  ))}
+              </div>
             </div>
           )}
         </div>
