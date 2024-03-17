@@ -58,12 +58,12 @@ export const fetchAllFolders = async (): Promise<Folder[]> => {
 
 export const fetchFolderById = async (
   folderId: string
-): Promise<string | Folder> => {
+): Promise<Folder> => {
   try {
-    if (!folderId) return "Folder ID Is Not Found";
+    if (!folderId) throw new Error("Folder id is not valid")
 
     const token = cookies().get("token");
-    if (!token) return "User not logged in";
+    if (!token) throw new Error("Token is not valid")
 
     const response = await axios.get(`${API_BASE_URL}/api/folder/${folderId}`, {
       headers: {
