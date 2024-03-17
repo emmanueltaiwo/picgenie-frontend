@@ -46,6 +46,18 @@ const GeneratedImages = () => {
     );
   }
 
+  if (!data || !Array.isArray(data)) {
+    return (
+      <div className="mt-16 flow-root sm:mt-24">
+        <div className="-m-2 rounded-xl bg-gray-900/5 dark:bg-gray-400/5 p-2 py-5 ring-1 ring-inset ring-gray-900/10 dark:ring-gray-500/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+          <div className="w-full grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {skeletonCards}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <p className="mt-6 text-md sm:text-lg sm:leading-8 text-gray-600 dark:text-gray-300">
@@ -74,7 +86,8 @@ const GeneratedImages = () => {
               <Folders />
               <div className="mt-5 w-full grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {data
-                  ?.sort(
+                  .slice()
+                  .sort(
                     (a: ImageGenerated, b: ImageGenerated) =>
                       new Date(b.created_at).getTime() -
                       new Date(a.created_at).getTime()
