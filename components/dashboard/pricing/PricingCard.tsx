@@ -16,7 +16,10 @@ const PricingCard = ({ token }: { token: string }) => {
   const makePayment = async (id: string) => {
     try {
       setIsLoading(true);
-      if (!STRIPE_PUBLISHABLE_KEY) return;
+      if (!STRIPE_PUBLISHABLE_KEY) {
+        console.log("STRIPE_PUBLISHABLE_KEY NOT FOUND")
+        return;
+      }
 
       const stripe = await loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -52,6 +55,8 @@ const PricingCard = ({ token }: { token: string }) => {
       setIsLoading(false);
 
       throw new Error();
+    }finally {
+      setIsLoading(false);
     }
   };
 
